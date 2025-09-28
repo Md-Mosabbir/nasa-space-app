@@ -1,4 +1,5 @@
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import "leaflet/dist/leaflet.css";
 import "./style.css";
 import { initUserInput } from "./components/initUserInput";
 import { initRiskCharts } from "./components/visualCharts";
