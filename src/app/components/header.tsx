@@ -7,7 +7,7 @@ export default function Header() {
 
   <header className="w-full flex items-center justify-center sm:justify-between py-6">
         <div className="hidden sm:block"></div>
-        <Link href="/"> <h1 className="text-xl font-semibold tracking-[-0.01em]">Weatherly</h1> </Link>
+        <Link href="/"> <h1 className=" text-white text-xl font-semibold tracking-[-0.01em]">Weatherly</h1> </Link>
         <div className="hidden sm:block"></div>
       </header>
 
