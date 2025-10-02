@@ -19,13 +19,13 @@ interface LocationValue {
   name?: string;
 }
 
-
 function getApiUrl(path: string) {
   if (process.env.NODE_ENV === "development") {
     // Dev: hit localhost backend directly
     return `http://localhost:8000${path}`;
   }
   // Prod: use environment variable
+  console.log("API Base URL:", process.env.NEXT_PUBLIC_API_BASE_URL);
   const base = process.env.NEXT_PUBLIC_API_BASE_URL || "";
   return `${base}${path}`;
 }
