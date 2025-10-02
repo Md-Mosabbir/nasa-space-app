@@ -1,11 +1,7 @@
 export default function Home() {
   return (
     <div className="container">
-      <header className="w-full flex items-center justify-center sm:justify-between py-6">
-        <div className="hidden sm:block"></div>
-        <h1 className="text-xl font-semibold tracking-[-0.01em]">Weatherly</h1>
-        <div className="hidden sm:block"></div>
-      </header>
+
 
       <main className="pt-6 pb-20 md:pt-14 lg:pt-20 flex flex-col items-center text-center">
         <h2 className="headline text-4xl sm:text-5xl md:text-6xl lg:text-7xl max-w-[980px]">
