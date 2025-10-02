@@ -48,13 +48,13 @@ export function EventDatePicker() {
     <div className="space-y-4 w-full max-w-md">
       {/* Quick-select buttons */}
       <div className="flex gap-2 flex-wrap">
-        <Button size="sm" onClick={setToday} className="bg-[#52B788] hover:bg-[#52B788]/90 text-white">
+        <Button type="button" size="sm" onClick={setToday} className="bg-[#52B788] hover:bg-[#52B788]/90 text-white">
           Today
         </Button>
-        <Button size="sm" onClick={setTomorrow} className="bg-[#52B788] hover:bg-[#52B788]/90 text-white">
+        <Button type="button" size="sm" onClick={setTomorrow} className="bg-[#52B788] hover:bg-[#52B788]/90 text-white">
           Tomorrow
         </Button>
-        <Button size="sm" onClick={setThisWeekend} className="bg-[#52B788] hover:bg-[#52B788]/90 text-white">
+        <Button type="button" size="sm" onClick={setThisWeekend} className="bg-[#52B788] hover:bg-[#52B788]/90 text-white">
           This Weekend
         </Button>
       </div>
@@ -63,6 +63,7 @@ export function EventDatePicker() {
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
+            type="button"
             variant="outline"
             className="w-full justify-between bg-[#585858] hover:bg-[#585858] hover:text-[#d9d9d9] border-none text-[#d9d9d9] placeholder:text-[#d9d9d9] font-normal pl-4 pr-10 py-6 rounded-lg "
           >

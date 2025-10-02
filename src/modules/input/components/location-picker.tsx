@@ -32,7 +32,7 @@ export function LocationPicker({ onLocationChange }: LocationPickerProps) {
   const searchTimeoutRef = useRef<NodeJS.Timeout>()
   const containerRef = useRef<HTMLDivElement>(null)
 
-const OPENCAGE_KEY = process.env.NEXT_PUBLIC_OPENCAGE_KEY;
+  const OPENCAGE_KEY = process.env.NEXT_PUBLIC_OPENCAGE_KEY;
 
 
   // Close results when clicking outside
@@ -140,22 +140,22 @@ const OPENCAGE_KEY = process.env.NEXT_PUBLIC_OPENCAGE_KEY;
       <div className="flex gap-2">
         <Button
           onClick={() => setInputMode("search")}
-          className={`${
-            inputMode === "search"
-              ? "bg-[#52B788] hover:bg-[#52B788]/90 text-white"
-              : "bg-transparent text-gray-500 hover:bg-gray-100"
-          }`}
+          type="button"
+          className={`${inputMode === "search"
+            ? "bg-[#52B788] hover:bg-[#52B788]/90 text-white"
+            : "bg-transparent text-gray-500 hover:bg-gray-100"
+            }`}
           size="sm"
         >
           Search
         </Button>
         <Button
+          type="button"
           onClick={() => setInputMode("map")}
-          className={`${
-            inputMode === "map"
-              ? "bg-[#52B788] hover:bg-[#52B788]/90 text-white"
-              : "bg-transparent text-gray-500 hover:bg-gray-100"
-          }`}
+          className={`${inputMode === "map"
+            ? "bg-[#52B788] hover:bg-[#52B788]/90 text-white"
+            : "bg-transparent text-gray-500 hover:bg-gray-100"
+            }`}
           size="sm"
         >
           Map
@@ -200,6 +200,7 @@ const OPENCAGE_KEY = process.env.NEXT_PUBLIC_OPENCAGE_KEY;
 
           <button
             onClick={getCurrentLocation}
+            type="button"
             className="flex items-center gap-2 text-[#52B788] hover:text-[#52B788]/80 transition-colors"
           >
             <Navigation className="w-4 h-4" />

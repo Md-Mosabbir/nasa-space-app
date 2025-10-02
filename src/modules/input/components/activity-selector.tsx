@@ -5,17 +5,10 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { X } from "lucide-react"
 
-// Dummy activities - can be replaced with fetched data later
-const DUMMY_ACTIVITIES = [
-  { id: "running", name: "Running", icon: "🏃" },
-  { id: "swimming", name: "Swimming", icon: "🏊" },
-  { id: "hiking", name: "Hiking", icon: "🥾" },
-  { id: "cycling", name: "Cycling", icon: "🚴" },
-  { id: "yoga", name: "Yoga", icon: "🧘" },
-  { id: "gym", name: "Gym", icon: "💪" },
-  { id: "dancing", name: "Dancing", icon: "💃" },
-  { id: "tennis", name: "Tennis", icon: "🎾" },
-]
+interface Activity {
+  id: string
+  name: string
+}
 
 interface ActivitySelectorProps {
   name?: string
@@ -24,13 +17,59 @@ interface ActivitySelectorProps {
   onChange?: (selected: string[]) => void
 }
 
-export function ActivitySelector({ name = "activities", label = "Activity", defaultSelected = [], onChange }: ActivitySelectorProps) {
+/**
+ * Returns the full API URL depending on environment
+ */
+function getApiUrl(path: string) {
+  if (process.env.NODE_ENV === "development") {
+    return `http://localhost:8000${path}`
+  }
+  const base = process.env.NEXT_PUBLIC_API_BASE_URL || ""
+  return `${base}${path}`
+}
+
+export function ActivitySelector({
+  name = "activities",
+  label = "Activity",
+  defaultSelected = [],
+  onChange,
+}: ActivitySelectorProps) {
   const [selectedActivities, setSelectedActivities] = useState<string[]>(defaultSelected)
+  const [activities, setActivities] = useState<Activity[]>([])
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
     onChange?.(selectedActivities)
   }, [selectedActivities, onChange])
+
+  // Fetch activities from API
+  useEffect(() => {
+    async function fetchActivities() {
+      try {
+        const res = await fetch(getApiUrl("/analyse/activities"))
+        if (!res.ok) throw new Error("Failed to fetch activities")
+        const dataObj = await res.json() as Record<string, any>
+
+        // Convert object keys to array of { id, name: id }
+        const data: Activity[] = Object.keys(dataObj).map((key) => ({
+          id: key,
+          name: key, // show id as name
+        }))
+
+        setActivities(data)
+        console.log("Fetched activities:", data)
+      } catch (e) {
+        console.error("Fetch activities failed, using fallback", e)
+        setActivities([
+          { id: "hiking", name: "hiking" },
+          { id: "fishing", name: "fishing" },
+          { id: "festival", name: "festival" },
+          { id: "generic", name: "generic" },
+        ])
+      }
+    }
+    fetchActivities()
+  }, [])
 
   const toggleActivity = (activityId: string) => {
     setSelectedActivities((prev) =>
@@ -42,12 +81,6 @@ export function ActivitySelector({ name = "activities", label = "Activity", defa
     setSelectedActivities((prev) => prev.filter((id) => id !== activityId))
   }
 
-  const getSelectedActivityNames = () => {
-    return DUMMY_ACTIVITIES.filter((activity) => selectedActivities.includes(activity.id)).map(
-      (activity) => activity.name,
-    )
-  }
-
   return (
     <div className="w-full max-w-md space-y-4">
       <div className="space-y-3">
@@ -55,8 +88,9 @@ export function ActivitySelector({ name = "activities", label = "Activity", defa
 
         {/* Quick select buttons - showing first 3 activities */}
         <div className="flex flex-wrap gap-2">
-          {DUMMY_ACTIVITIES.slice(0, 3).map((activity) => (
+          {activities.slice(0, 3).map((activity) => (
             <Button
+              type="button"
               key={activity.id}
               onClick={() => toggleActivity(activity.id)}
               variant={selectedActivities.includes(activity.id) ? "default" : "outline"}
@@ -76,12 +110,12 @@ export function ActivitySelector({ name = "activities", label = "Activity", defa
         <div className="relative">
           <div
             onClick={() => setIsOpen(!isOpen)}
-            className="flex items-center justify-between bg-[#585858] rounded-lg px-4 py-3 cursor-pointer  transition-colors"
+            className="flex items-center justify-between bg-[#585858] rounded-lg px-4 py-3 cursor-pointer transition-colors"
           >
             <div className="flex-1 flex flex-wrap gap-2">
               {selectedActivities.length > 0 ? (
                 selectedActivities.map((activityId) => {
-                  const activity = DUMMY_ACTIVITIES.find((a) => a.id === activityId)
+                  const activity = activities.find((a) => a.id === activityId)
                   return (
                     <Badge
                       key={activityId}
@@ -100,7 +134,12 @@ export function ActivitySelector({ name = "activities", label = "Activity", defa
                 <span className="text-[#d9d9d9]">Choose your activities</span>
               )}
             </div>
-            <svg className="w-5 h-5 text-[#52B788]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg
+              className="w-5 h-5 text-[#52B788]"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
           </div>
@@ -108,17 +147,14 @@ export function ActivitySelector({ name = "activities", label = "Activity", defa
           {/* Dropdown with all activities */}
           {isOpen && (
             <div className="absolute z-10 w-full mt-2 bg-gray-800 border border-gray-700 rounded-lg shadow-lg max-h-60 overflow-y-auto">
-              {DUMMY_ACTIVITIES.map((activity) => (
+              {activities.map((activity) => (
                 <div
                   key={activity.id}
                   onClick={() => toggleActivity(activity.id)}
                   className={`flex items-center justify-between px-4 py-3 cursor-pointer hover:bg-gray-700 transition-colors ${selectedActivities.includes(activity.id) ? "bg-gray-700" : ""
                     }`}
                 >
-                  <span className="text-gray-300 flex items-center gap-2">
-                    <span>{activity.icon}</span>
-                    {activity.name}
-                  </span>
+                  <span className="text-gray-300">{activity.name}</span>
                   {selectedActivities.includes(activity.id) && (
                     <svg className="w-5 h-5 text-[#52B788]" fill="currentColor" viewBox="0 0 20 20">
                       <path
@@ -134,6 +170,7 @@ export function ActivitySelector({ name = "activities", label = "Activity", defa
           )}
         </div>
       </div>
+
       {/* Hidden input for form submission */}
       <input type="hidden" name={name} value={selectedActivities.join(",")} />
     </div>
