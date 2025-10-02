@@ -25,7 +25,6 @@ import {
   CartesianGrid,
   XAxis,
   YAxis,
-  ResponsiveContainer, // ⬅️ import this
 } from "recharts";
 
 export function GraphsSection() {
