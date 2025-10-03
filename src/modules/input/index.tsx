@@ -115,7 +115,10 @@ export default function InputForm() {
             <LocationPicker onLocationChange={setDestination} />
           </div>
           <div className="space-y-3">
-            <ActivitySelector label="Activity" name="activities" />
+            <label className="text-base font-semibold text-white">
+              Activity
+            </label>
+            <ActivitySelector name="activities" />
           </div>
         </div>
 

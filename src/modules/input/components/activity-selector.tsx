@@ -83,31 +83,28 @@ export function ActivitySelector({
 
   return (
     <div className="w-full max-w-md space-y-4">
-      <div className="space-y-3">
-        <label className="text-sm font-medium text-gray-300">{label}</label>
+      {/* Quick select buttons - showing first 3 activities */}
+      <div className="flex flex-wrap gap-2">
+        {activities.slice(0, 3).map((activity) => (
+          <Button
+            type="button"
+            key={activity.id}
+            onClick={() => toggleActivity(activity.id)}
+            variant={selectedActivities.includes(activity.id) ? "default" : "outline"}
+            className={
+              selectedActivities.includes(activity.id)
+                ? "bg-[#52B788] hover:bg-none text-white border-none"
+                : "bg-[#282828] hover:bg-white border-none text-gray-300 "
+            }
+            size="sm"
+          >
+            {activity.name}
+          </Button>
+        ))}
+      </div>
 
-        {/* Quick select buttons - showing first 3 activities */}
-        <div className="flex flex-wrap gap-2">
-          {activities.slice(0, 3).map((activity) => (
-            <Button
-              type="button"
-              key={activity.id}
-              onClick={() => toggleActivity(activity.id)}
-              variant={selectedActivities.includes(activity.id) ? "default" : "outline"}
-              className={
-                selectedActivities.includes(activity.id)
-                  ? "bg-[#52B788] hover:bg-none text-white border-none"
-                  : "bg-[#282828] hover:bg-white border-none text-gray-300 "
-              }
-              size="sm"
-            >
-              {activity.name}
-            </Button>
-          ))}
-        </div>
-
-        {/* Input field that opens dropdown */}
-        <div className="relative">
+      {/* Input field that opens dropdown */}
+      <div className="relative">
           <div
             onClick={() => setIsOpen(!isOpen)}
             className="flex items-center justify-between bg-[#585858] rounded-lg px-4 py-3 cursor-pointer transition-colors"
@@ -169,7 +166,6 @@ export function ActivitySelector({
             </div>
           )}
         </div>
-      </div>
 
       {/* Hidden input for form submission */}
       <input type="hidden" name={name} value={selectedActivities.join(",")} />
