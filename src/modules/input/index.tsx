@@ -96,26 +96,26 @@ export default function InputForm() {
     >
       <div className="w-full max-w-5xl rounded-2xl bg-[#1a1a1a] border border-gray-800 p-8 space-y-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-          <div className="space-y-3">
-            <label className="text-base font-semibold text-white">
+          <div className="space-y-4">
+            <label className="text-base font-semibold text-white mb-2">
               Current Location
             </label>
             <LocationPicker onLocationChange={setOrigin} />
           </div>
-          <div className="space-y-3">
-            <label className="text-base font-semibold text-white">
+          <div className="space-y-4">
+            <label className="text-base font-semibold text-white mb-2">
               Event Date
             </label>
             <EventDatePicker />
           </div>
-          <div className="space-y-3">
-            <label className="text-base font-semibold text-white">
+          <div className="space-y-4">
+            <label className="text-base font-semibold text-white mb-2">
               Destination
             </label>
             <LocationPicker onLocationChange={setDestination} />
           </div>
-          <div className="space-y-3">
-            <label className="text-base font-semibold text-white">
+          <div className="space-y-4">
+            <label className="text-base font-semibold text-white mb-2">
               Activity
             </label>
             <ActivitySelector name="activities" />

@@ -84,7 +84,7 @@ export function ActivitySelector({
   return (
     <div className="w-full max-w-md space-y-4">
       {/* Quick select buttons - showing first 3 activities */}
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2 mt-2">
         {activities.slice(0, 3).map((activity) => (
           <Button
             type="button"

@@ -147,7 +147,7 @@ export function LocationPicker({ onLocationChange }: LocationPickerProps) {
 
   return (
     <div ref={containerRef} className="space-y-4">
-      <div className="flex gap-2">
+      <div className="flex gap-2 mt-2" >
         <Button
           onClick={() => setInputMode("search")}
           type="button"
