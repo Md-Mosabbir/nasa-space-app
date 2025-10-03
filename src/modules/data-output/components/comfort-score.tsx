@@ -110,7 +110,7 @@ export function ComfortScore({ score, concerns, color }: ComfortScoreProps) {
           <ul className="text-white font-medium text-left space-y-1">
             {concerns.map((c) => (
               <li key={c} className="leading-relaxed">
-                {c}
+                {c === "Temperature/DI" ? "Temperature" : c}
               </li>
             ))}
           </ul>
